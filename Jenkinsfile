@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     // Define Docker Hub repository and image name
-                    def dockerRepo = 'mark67br/spring-petclinic'
+                    def dockerRepo = 'mark67br/mr'
                     def imageName = "${dockerRepo}:${env.GIT_COMMIT.take(7)}"
 
                     // Build the Docker image with the GIT_COMMIT (short) tag
