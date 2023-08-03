@@ -37,5 +37,26 @@ pipeline {
                 sh 'mvn clean package -DskipTests=true'
             }
         }
+          
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Define Docker Hub repository and image name
+                    def dockerRepo = 'mark67br/spring-petclinic'
+                    def imageName = "${dockerRepo}:${env.GIT_COMMIT.take(7)}"
+
+                    // Build the Docker image with the GIT_COMMIT (short) tag
+                    sh "docker build -t ${imageName} ."
+
+                    // Log in to Docker Hub
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                    }
+
+                    // Push the Docker image to Docker Hub repository
+                    sh "docker push ${imageName}"
+                }
+            }
+        }
     }
 }
