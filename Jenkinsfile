@@ -46,7 +46,6 @@ pipeline {
                     def imageName = "${dockerRepo}:${env.GIT_COMMIT.take(7)}"
 
                     // Build the Docker image with the GIT_COMMIT (short) tag
-                    sh "echo $USER"
                     sh "docker build -t ${imageName} ."
 
                     // Log in to Docker Hub
