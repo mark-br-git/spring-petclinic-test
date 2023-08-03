@@ -5,7 +5,7 @@ FROM openjdk:17
 WORKDIR /app
 
 # Copy the Spring Boot application jar file to the container
-COPY target/spring-petclinic.jar /app/spring-petclinic.jar
+COPY target/spring-petclinic-3.1.0-SNAPSHOT.jar /app/spring-petclinic.jar
 
 # Expose the port on which the application will listen
 EXPOSE 8080
