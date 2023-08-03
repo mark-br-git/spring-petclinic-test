@@ -24,10 +24,17 @@ pipeline {
             }
         }
   
-        stage('Build') {
+        stage('Tests') {
             steps {
-                // Build the project using Maven
-                sh 'mvn clean install'
+                // Test the project using Maven
+                sh 'mvn clean test'
+            }
+        }
+      
+        stage('Build without Tests') {
+            steps {
+                // Buduje projekt Maven pomijając testy
+                sh 'mvn clean package -DskipTests=true'
             }
         }
     }
