@@ -6,7 +6,7 @@ pipeline {
           steps {
           // Checkout your source code from version control
                 checkout([$class: 'GitSCM',
-                     branches: [[name: 'main']],
+                     branches: [[name: 'test']],
                      userRemoteConfigs: [[url: 'https://github.com/mark-br-git/spring-petclinic-test.git']]])
           }
         }
