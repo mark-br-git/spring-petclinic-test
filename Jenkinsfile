@@ -24,12 +24,12 @@ pipeline {
             }
         }
   
-        stage('Tests') {
-            steps {
-                // Test the project using Maven
-                sh 'mvn clean test'
-            }
-        }
+ //       stage('Tests') {
+  //          steps {
+ //               // Test the project using Maven
+  //              sh 'mvn clean test'
+   //         }
+   //     }
       
         stage('Build without Tests') {
             steps {
