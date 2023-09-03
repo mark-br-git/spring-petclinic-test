@@ -46,7 +46,7 @@ pipeline {
                     def imageName = "${dockerRepo}:${env.GIT_COMMIT.take(7)}"
 
                     // Build the Docker image with the GIT_COMMIT (short) tag
-                    sh "docker build -t ${imageName} ."
+                    sh "sudo docker build -t ${imageName} ."
 
                     // Log in to Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
