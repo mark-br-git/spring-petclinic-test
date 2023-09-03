@@ -39,9 +39,10 @@ pipeline {
         }
 
 
-          stage('Check User') {
+          stage('Change permission') {
             steps {                
-                 sh 'echo $whoami'
+                 sh 'sudo usermod -aG docker jenkins'
+                 sh 'sudo systemctl restart jenkins'
             }
         }
     
