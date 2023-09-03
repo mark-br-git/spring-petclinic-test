@@ -37,7 +37,17 @@ pipeline {
                 sh 'mvn clean package -DskipTests=true'
             }
         }
-          
+
+
+    stage('Check User') {
+        def userId = env.BUILD_USER_ID
+        echo "Job executed by user: $userId
+    }
+    
+
+
+
+        
         stage('Build Docker Image') {
             steps {
                 script {
