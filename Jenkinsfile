@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script {
                     def userId = env.BUILD_USER_ID
-                    echo "Job executed by user: $userId"
+                    echo "$whoami"
                     
                     // Tutaj możesz wykonać inne operacje związane z identyfikatorem użytkownika
                 }
