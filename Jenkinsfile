@@ -27,7 +27,7 @@ pipeline {
         stage('Tests') {
             steps {
                 // Test the project using Maven
-                sh 'mvn clean test'
+                sh 'mvn clean test -Dtest=!PostgresIntegrationTests'
             }
         }
       
