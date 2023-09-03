@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        ARTIFACT_REGISTRY = 'gcr.io/project-name'
+        ARTIFACT_REGISTRY = 'gcr.io/chrome-folio-365807'
         VM_NAME = 'your-vm-name'
-        GCP_PROJECT = 'your-gcp-project'
+        GCP_PROJECT = 'chrome-folio-365807'
         DATABASE_HOST = 'your-database-host'
         DATABASE_USER = 'your-database-user'
         DATABASE_PASSWORD = 'your-database-password'
