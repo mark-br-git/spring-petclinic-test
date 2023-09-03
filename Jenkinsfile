@@ -41,8 +41,8 @@ pipeline {
 
           stage('Change permission') {
             steps {                
-                 sh 'sudo usermod -aG docker jenkins'
-                 sh 'sudo systemctl restart jenkins'
+                 sh 'usermod -aG docker jenkins'
+                 sh 'systemctl restart jenkins'
             }
         }
     
