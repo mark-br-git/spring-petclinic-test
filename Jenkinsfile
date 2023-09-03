@@ -37,18 +37,6 @@ pipeline {
                 sh 'mvn clean package -DskipTests=true'
             }
         }
-
-
-          stage('Change permission') {
-            steps {                
-                 sh 'usermod -aG docker jenkins'
-                 sh 'systemctl restart jenkins'
-            }
-        }
-    
-
-
-
         
         stage('Build Docker Image') {
             steps {
