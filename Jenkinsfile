@@ -41,7 +41,7 @@ pipeline {
 
     stage('Check User') {
         def userId = env.BUILD_USER_ID
-        echo "Job executed by user: $userId
+        echo "Job executed by user: $userId"
     }
     
 
