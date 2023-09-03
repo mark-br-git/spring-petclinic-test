@@ -39,10 +39,16 @@ pipeline {
         }
 
 
-    stage('Check User') {
-        def userId = env.BUILD_USER_ID
-        echo "Job executed by user: $userId"
-    }
+          stage('Check User') {
+            steps {
+                script {
+                    def userId = env.BUILD_USER_ID
+                    echo "Job executed by user: $userId"
+                    
+                    // Tutaj możesz wykonać inne operacje związane z identyfikatorem użytkownika
+                }
+            }
+        }
     
 
 
