@@ -1,35 +1,55 @@
 pipeline {
     agent any
-    
+
+    environment {
+        ARTIFACT_REGISTRY = 'gcr.io/project-name'
+        VM_NAME = 'your-vm-name'
+        GCP_PROJECT = 'your-gcp-project'
+        DATABASE_HOST = 'your-database-host'
+        DATABASE_USER = 'your-database-user'
+        DATABASE_PASSWORD = 'your-database-password'
+        DATABASE_NAME = 'your-database-name'
+    }
+
     stages {
-        stage('Checkout') {
-          steps {
-          // Checkout your source code from version control
-                checkout([$class: 'GitSCM',
-                     branches: [[name: 'main']],
-                     userRemoteConfigs: [[url: 'https://github.com/mark-br-git/spring-petclinic-test.git']]])
-          }
-        }
-          
-        stage('Build Docker Image') {
+        stage('Semantic Versioning') {
             steps {
                 script {
-                    // Define Docker Hub repository and image name
-                    def dockerRepo = 'mark67br/main'
-                    def imageName = "${dockerRepo}:${env.GIT_COMMIT.take(7)}"
+                    // Run the Python script to calculate the new version
+                    def newVersion = sh(script: 'python semver_script.py', returnStdout: true).trim()
+                    currentBuild.displayName = "Release ${newVersion}"
 
-                    // Build the Docker image with the GIT_COMMIT (short) tag
-                    sh "docker build -t ${imageName} -f Dockerfile_main ."
+                    // Create a Git tag with the new version
+                    sh "git tag -a ${newVersion} -m 'Release ${newVersion}'"
+                    sh "git push origin ${newVersion}"
 
-                    // Log in to Docker Hub
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                    }
-
-                    // Push the Docker image to Docker Hub repository
-                    sh "docker push ${imageName}"
+                    // Archive the artifacts with the Git tag
+                    archiveArtifacts artifacts: '**/*', allowEmptyArchive: true, onlyIfSuccessful: false
                 }
+            }
+        }
+
+        stage('Build and Push Docker Image') {
+            steps {
+                script {
+                    // Build your Docker image and tag it with the new version
+                    sh "docker build -t ${ARTIFACT_REGISTRY}/spring-petclinic:${newVersion} ."
+                    sh "docker push ${ARTIFACT_REGISTRY}/spring-petclinic:${newVersion}"
+                }
+            }
+        }
+
+        stage('Manual Deployment') {
+            steps {
+                input("Confirm deployment to ${VM_NAME}?")
+                // You can run any deployment steps here, e.g., SSH into VM and deploy
+                // For simplicity, let's assume you have a script for deployment
+                sh './deploy_script.sh'
+
+                // After successful deployment, print the application link
+                echo "Application is deployed at http://${VM_NAME}/"
             }
         }
     }
 }
+
