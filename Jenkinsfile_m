@@ -44,8 +44,8 @@ pipeline {
             steps {
          script {
             // SSH configuration for your VM
-            def vmUser = 'your_vm_username'
-            def vmHost = 'your_vm_host'
+            def vmUser = 'mbryg'
+            def vmHost = 'vm-jenkins'
             def sshKeyPath = '/path/to/your/ssh/key'
 
             // Application details
