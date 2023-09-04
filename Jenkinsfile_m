@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        GITHUB_TOKEN = credentials('Githubtoken')
+    }
 
     stages {
 
@@ -10,11 +12,12 @@ pipeline {
  
             steps {
                 script {
+                sh "git push https://${GITHUB_TOKEN}@github.com/mark-br-git/spring-petclinic-test.git main"
 
-withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    sh("git tag 1.4.0")
-    sh('git push https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git 1.4.0')
-}
+// withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+//    sh("git tag 1.4.0")
+//    sh('git push https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git 1.4.0')
+// }
 
 
 //def repoUrlWithAuth = "https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git"
