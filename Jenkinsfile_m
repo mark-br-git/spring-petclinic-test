@@ -10,16 +10,22 @@ pipeline {
  
             steps {
                 script {
-      def githubToken = credentials('GitHub Token')
+
+def repoUrlWithAuth = "https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git"
+def sourceBranch = "main"
+
+git push --repo=${repoUrlWithAuth} --set-upstream ${repoUrlWithAuth} ${sourceBranch}
+
+ //     def githubToken = credentials('GitHub Token')
  //     withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) 
                 
-                    def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
-                    def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
+  //                  def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
+    //                def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
    
-                    sh "git tag $newVersion"
+       //             sh "git tag $newVersion"
                 //    sh "git push origin $newVersion -u mark-br-git -p $PASSWORD"
                 //    sh "git push https://${githubToken}@github.com/mark-br-git/spring-petclinic-test.git 1.2.0 main"
-                   sh "git push https://${githubToken}@github.com/mark-br-git/spring-petclinic-test.git main"
+        //           sh "git push https://${githubToken}@github.com/mark-br-git/spring-petclinic-test.git main"
 
                     }
                 }
