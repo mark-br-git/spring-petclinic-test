@@ -1,3 +1,6 @@
+import semver
+import subprocess
+
 pipeline {
     agent any
 
