@@ -42,13 +42,40 @@ pipeline {
 
         stage('Manual Deployment') {
             steps {
-                input("Confirm deployment to ${VM_NAME}?")
-                // You can run any deployment steps here, e.g., SSH into VM and deploy
-                // For simplicity, let's assume you have a script for deployment
-                sh './deploy_script.sh'
+         script {
+            // SSH configuration for your VM
+            def vmUser = 'your_vm_username'
+            def vmHost = 'your_vm_host'
+            def sshKeyPath = '/path/to/your/ssh/key'
 
-                // After successful deployment, print the application link
-                echo "Application is deployed at http://${VM_NAME}/"
+            // Application details
+            def appName = 'my-app'
+            def appVersion = '1.0.0'  // Replace with the desired version
+
+            // MySQL database connection details
+            def dbHost = 'mysql-host'
+            def dbPort = '3306'
+            def dbName = 'mydb'
+            def dbUser = 'db-username'
+            def dbPassword = 'db-password'
+
+            // Connect to the VM using SSH
+            sshagent([sshKeyPath]) {
+                sh "ssh ${vmUser}@${vmHost} 'echo Connected to VM'"
+                
+                // Check if a previous version of the application exists and remove it
+                sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${appVersion} && docker rm -f ${appName}:${appVersion} || echo No previous version found'"
+                
+                // Pull the new Docker image from the artifact storage
+                sh "ssh ${vmUser}@${vmHost} 'docker pull my-app:${appVersion}'"
+
+                // Run the application, ensuring it's connected to the MySQL database
+                sh "ssh ${vmUser}@${vmHost} 'docker run -d --name ${appName}:${appVersion} --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} my-app:${appVersion}'"
+            }
+
+            // Print the link to the application
+            echo "Application is running at http://${vmHost}:<app_port>"
+        }
             }
         }
     }
