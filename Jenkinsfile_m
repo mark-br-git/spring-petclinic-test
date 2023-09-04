@@ -10,54 +10,12 @@ pipeline {
             steps {
                 script {
              
-                    // Log in to Docker Hub
-                    withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                    sh "git login -u ${GIT_USERNAME} -p ${GIT_PASSWORD}"
-                    }
-
-                    // Push the Docker image to Docker Hub repository
-                    sh "git push origin 1.7.0"
-                }
-            }
-        }
- 
- //           steps {
- //               script {
- //              withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {/
- //   sh("git tag -a some_tag3 -m 'Jenkins'")
-//    sh('echo $GIT_USERNAME')
-//    sh('echo $GIT_PASSWORD')
-//    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test --tags')
-// }
-
-// withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-//    sh("git tag 1.4.0")
-//    sh('git push https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git 1.4.0')
-// }
-
-
-//def repoUrlWithAuth = "https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git"
-//def sourceBranch = "main"
-
-//git push --repo=${repoUrlWithAuth} --set-upstream ${repoUrlWithAuth} ${sourceBranch}
-
- //     def githubToken = credentials('GitHub Token')
- //     withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) 
-                
-  //                  def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
-    //                def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
-   
-       //             sh "git tag $newVersion"
-                //    sh "git push origin $newVersion -u mark-br-git -p $PASSWORD"
-                //    sh "git push https://${githubToken}@github.com/mark-br-git/spring-petclinic-test.git 1.2.0 main"
-        //           sh "git push https://${githubToken}@github.com/mark-br-git/spring-petclinic-test.git main"
-
-                    }
-                }
-            
-        
-    
-
-
-
-
+ withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+    sh("git tag -a some_tag -m 'Jenkins'")
+    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@<REPO>github.com/mark-br-git/spring-petclinic-test.git --tags')
+}
+}
+}
+}
+}
+}
