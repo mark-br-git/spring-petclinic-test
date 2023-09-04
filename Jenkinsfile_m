@@ -13,7 +13,7 @@ pipeline {
 
 withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
     sh("git tag 1.2.0")
-    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git 1.2.0')
+    sh('git push https://mark-br-git:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git 1.2.0')
 }
 
 
