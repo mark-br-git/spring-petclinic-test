@@ -6,10 +6,10 @@ pipeline {
 
 
         stage('Bump Version and Create Tag') {
-    //      withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-     //      sh 'git push origin 1.2.0 -u $USERNAME -p $PASSWORD'
+         withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+           sh 'git push origin 1.2.0 -u $USERNAME -p $PASSWORD'
 
-// }
+ }
             steps {
                 script {
                     def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
