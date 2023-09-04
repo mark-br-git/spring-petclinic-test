@@ -23,8 +23,8 @@ pipeline {
   //                  def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
   //                  def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
 
-   //                 sh "git tag $newVersion"
-  //                  sh "git push origin $newVersion"
+   //                 sh "git tag 1.3.0"
+  //                  sh "git push origin 1.3.0"
   //              }
    //         }
    //     }
