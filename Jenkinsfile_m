@@ -11,6 +11,23 @@ pipeline {
 
         stage('Bump Version and Create Tag') {
 
+ stage('Build Docker Image') {
+            steps {
+                script {
+                    // Define Docker Hub repository and image name
+                //    def dockerRepo = 'mark67br/main'
+               //     def imageName = "${dockerRepo}:${env.GIT_COMMIT.take(7)}"
+
+                    // Log in to Docker Hub
+                    withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    sh "git login -u ${GIT_USERNAME} -p ${GIT_PASSWORD}"
+                    }
+
+                    // Push the Docker image to Docker Hub repository
+                    sh "git push origin 1.7.0"
+                }
+            }
+        }
  
             steps {
                 script {
