@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Create Git Tag') {
+            steps {
+                script {
+                    // Run a Python script to calculate the next version based on SemVer
+                    def currentVersion = sh(script: 'python3 semver_script.py', returnStdout: true).trim()
+
+                    // Create a Git tag with the calculated version
+                    sh "git tag ${currentVersion}"
+                    sh "git push origin ${currentVersion}"
+                }
+            }
+        }
+
+        stage('Create Artifact') {
+            steps {
+                script {
+                    // Archive the repository with the Git tag as the artifact
+                    archiveArtifacts artifacts: "**/*", allowEmptyArchive: true, onlyIfSuccessful: false
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully!"
+        }
+        failure {
+            echo "Pipeline failed."
+        }
+    }
+}
