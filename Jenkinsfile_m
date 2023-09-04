@@ -17,7 +17,7 @@ pipeline {
 
                     sh "git tag $newVersion"
                     sh "git push origin $newVersion -u mark-br-git -p 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"
-"
+
                 }
             }
         }
