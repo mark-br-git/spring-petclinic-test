@@ -2,7 +2,21 @@ pipeline {
     agent any
 
     stages {
-     
+
+        stage('Push to GitHub') {
+            steps {
+                script {
+                    def githubToken = credentials('GitHub Token')
+                    withCredentials([string(credentialsId: 'GitHub Token', variable: 'GITHUB_TOKEN')]) {
+                 //       sh "git config --global credential.helper cache"
+                  //      sh "git config --global user.email 'your.email@example.com'"
+                  //      sh "git config --global user.name 'Your Name'"
+                        sh "git tag 1.2.0"
+                        sh "git push origin 1.2.0"
+                    }
+                }
+            }
+
         stage('Bump Version and Create Tag') {
             steps {
                 script {
