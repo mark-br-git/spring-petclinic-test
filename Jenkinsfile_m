@@ -5,15 +5,19 @@ pipeline {
     }
 
     stages {
-
+       stage('Checkout') {
+       git branch: 'main', credentialsId: 'git', url: 'git@github.com:mark-67-br/spring-petclinic-test.git'
+       }
 
         stage('Bump Version and Create Tag') {
 
  
             steps {
                 script {
-                sh("git tag 1.7.0")
-                sh "git push https://${GITHUB_TOKEN}@github.com/mark-br-git/spring-petclinic-test.git HEAD:main"
+               withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+    sh("git tag -a some_tag -m 'Jenkins'")
+    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test --tags')
+}
 
 // withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
 //    sh("git tag 1.4.0")
