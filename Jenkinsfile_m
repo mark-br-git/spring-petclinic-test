@@ -12,7 +12,7 @@ pipeline {
 
                     // Create a Git tag with the calculated version
                     sh "git tag ${currentVersion}"
-                    sh "git push https://github.com/mark-br-git/spring-petclinic-test.git ${currentVersion}"
+        //            sh "git push https://github.com/mark-br-git/spring-petclinic-test.git ${currentVersion}"
                 }
             }
         }
