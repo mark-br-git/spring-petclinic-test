@@ -5,19 +5,11 @@ pipeline {
     }
 
     stages {
-//       stage('Checkout') {
-//       git branch: 'main', credentialsId: 'git', url: 'git@github.com:mark-67-br/spring-petclinic-test.git'
- //      }
-
-        
 
  stage('Build Docker Image') {
             steps {
                 script {
-                    // Define Docker Hub repository and image name
-                //    def dockerRepo = 'mark67br/main'
-               //     def imageName = "${dockerRepo}:${env.GIT_COMMIT.take(7)}"
-
+             
                     // Log in to Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                     sh "git login -u ${GIT_USERNAME} -p ${GIT_PASSWORD}"
@@ -62,7 +54,7 @@ pipeline {
 
                     }
                 }
-            }
+            
         }
     
 
