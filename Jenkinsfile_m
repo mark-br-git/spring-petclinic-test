@@ -9,7 +9,7 @@ pipeline {
 //       git branch: 'main', credentialsId: 'git', url: 'git@github.com:mark-67-br/spring-petclinic-test.git'
  //      }
 
-        stage('Bump Version and Create Tag') {
+        
 
  stage('Build Docker Image') {
             steps {
@@ -29,14 +29,14 @@ pipeline {
             }
         }
  
-            steps {
-                script {
-               withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    sh("git tag -a some_tag3 -m 'Jenkins'")
-    sh('echo $GIT_USERNAME')
-    sh('echo $GIT_PASSWORD')
-    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test --tags')
-}
+ //           steps {
+ //               script {
+ //              withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {/
+ //   sh("git tag -a some_tag3 -m 'Jenkins'")
+//    sh('echo $GIT_USERNAME')
+//    sh('echo $GIT_PASSWORD')
+//    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test --tags')
+// }
 
 // withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
 //    sh("git tag 1.4.0")
@@ -64,7 +64,7 @@ pipeline {
                 }
             }
         }
-    }
+    
 
 
 
