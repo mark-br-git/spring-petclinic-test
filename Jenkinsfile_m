@@ -12,8 +12,8 @@ pipeline {
                 script {
 
 withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    sh("git tag 1.3.0")
-    sh('git push https://mark-br-git:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git 1.3.0')
+    sh("git tag 1.4.0")
+    sh('git push https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git 1.4.0')
 }
 
 
