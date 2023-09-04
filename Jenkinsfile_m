@@ -16,13 +16,14 @@ pipeline {
                     def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
 
                     sh "git tag $newVersion"
-                    sh "git push origin $newVersion -u mark-br-git -p $PASSWORD"
-
+                //    sh "git push origin $newVersion -u mark-br-git -p $PASSWORD"
+                    sh "git push https://$USERNAME:$PASSWORD@github.com/mark-br-git/spring-petclinic-test.git 1.2.0"
+                    }
                 }
             }
         }
     }
 }
-}
+
 
 
