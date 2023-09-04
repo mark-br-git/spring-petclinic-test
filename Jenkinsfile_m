@@ -2,12 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build and Test') {
-            steps {
-                // Tutaj umieść kroki związane z budową i testowaniem projektu
-            }
-        }
-
+     
         stage('Bump Version and Create Tag') {
             steps {
                 script {
