@@ -1,38 +1,24 @@
 pipeline {
     agent any
-  environment {
-       GITHUB_TOKEN = credentials('GitHub Token')
-    }
+
     stages {
-        stage('Create Git Tag') {
+        stage('Build and Test') {
             steps {
-                script {
-                    // Run a Python script to calculate the next version based on SemVer
-                    def currentVersion = sh(script: 'python3 semver_script.py', returnStdout: true).trim()
-
-                    // Create a Git tag with the calculated version
-                    sh "git tag ${currentVersion}"
-        //            sh "git push https://github.com/mark-br-git/spring-petclinic-test.git ${currentVersion}"
-                }
+                // Tutaj umieść kroki związane z budową i testowaniem projektu
             }
         }
 
-        stage('Create Artifact') {
+        stage('Bump Version and Create Tag') {
             steps {
                 script {
-                    // Archive the repository with the Git tag as the artifact
-                    archiveArtifacts artifacts: "**/*", allowEmptyArchive: true, onlyIfSuccessful: false
+                    def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
+                    def newVersion = sh(returnStdout: true, script: "semver -i minor -c $currentTag")
+                    
+                    sh "git tag $newVersion"
+                    sh "git push origin $newVersion"
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            echo "Pipeline completed successfully!"
-        }
-        failure {
-            echo "Pipeline failed."
         }
     }
 }
+
