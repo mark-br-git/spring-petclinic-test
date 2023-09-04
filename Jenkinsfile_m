@@ -1,7 +1,7 @@
 pipeline {
     agent any
   environment {
-        GIT_CREDENTIALS = credentials('git')
+       GITHUB_TOKEN = credentials('GitHub Token')
     }
     stages {
         stage('Create Git Tag') {
