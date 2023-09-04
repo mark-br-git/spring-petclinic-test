@@ -10,7 +10,7 @@ pipeline {
 
                     // Create a Git tag with the calculated version
                     sh "git tag ${currentVersion}"
-  //                  sh "git push origin ${currentVersion}"
+    //                  sh "git push origin ${currentVersion}"
                 }
             }
         }
