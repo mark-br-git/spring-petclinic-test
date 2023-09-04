@@ -12,6 +12,7 @@ pipeline {
  
             steps {
                 script {
+                sh("git tag 1.4.0")
                 sh "git push https://${GITHUB_TOKEN}@github.com/mark-br-git/spring-petclinic-test.git main"
 
 // withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
