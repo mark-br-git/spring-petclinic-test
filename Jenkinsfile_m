@@ -11,7 +11,7 @@ pipeline {
                 script {
              
  withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    sh("git tag -a some_tag8 -m 'Jenkins'")
+    sh("git tag -a some_tag9 -m 'Jenkins'")
     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git --tags')
 }
 }
