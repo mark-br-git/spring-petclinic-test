@@ -6,11 +6,28 @@ pipeline {
             steps {
                 script {
                 withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                sh("git tag -a some_tag11 -m 'Jenkins'")
-                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git --tags')
+                def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
+                def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
+              
+            //    sh("git tag -a some_tag11 -m 'Jenkins'")
+                sh "git tag $newVersion"
+                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git $newVersion')
                 }
                 }
              }
            }
+
+  //      stage('Bump Version and Create Tag') {
+ //           steps {
+  //              script {
+  //                  def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
+  //                  def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
+
+   //                 sh "git tag $newVersion"
+  //                  sh "git push origin $newVersion"
+  //              }
+   //         }
+   //     }
+
          }
 }
