@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
       def githubToken = credentials('GitHub Token')
- //     withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+ //     withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) 
                 
                     def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
                     def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
@@ -25,7 +25,7 @@ pipeline {
             }
         }
     }
-}
+
 
 
 
