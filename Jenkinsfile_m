@@ -1,17 +1,19 @@
-import semver
-import subprocess
-
 pipeline {
     agent any
 
     stages {
-    
+        stage('Build and Test') {
+            steps {
+                // Tutaj umieść kroki związane z budową i testowaniem projektu
+            }
+        }
+
         stage('Bump Version and Create Tag') {
             steps {
                 script {
                     def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
-                    def newVersion = sh(returnStdout: true, script: "semver -i minor -c $currentTag")
-                    
+                    def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
+
                     sh "git tag $newVersion"
                     sh "git push origin $newVersion"
                 }
@@ -19,4 +21,5 @@ pipeline {
         }
     }
 }
+
 
