@@ -1,21 +1,16 @@
 pipeline {
     agent any
-//    environment {
-//        GITHUB_TOKEN = credentials('Githubtoken')
-//    }
 
-    stages {
-
- stage('Build Docker Image') {
+      stages {
+        stage('Build Docker Image') {
             steps {
                 script {
-             
- withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    sh("git tag -a some_tag10 -m 'Jenkins'")
-    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git --tags')
-}
-}
-}
-}
-}
+                withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                sh("git tag -a some_tag10 -m 'Jenkins'")
+                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git --tags')
+                }
+                }
+             }
+           }
+         }
 }
