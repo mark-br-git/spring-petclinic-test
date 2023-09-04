@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     // Run the Python script to calculate the new version
-                    def newVersion = sh(script: 'python semver_script.py', returnStdout: true).trim()
+                    def newVersion = sh(script: 'python3 semver_script.py', returnStdout: true).trim()
                     currentBuild.displayName = "Release ${newVersion}"
 
                     // Create a Git tag with the new version
