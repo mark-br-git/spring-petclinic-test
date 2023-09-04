@@ -10,7 +10,8 @@ pipeline {
  
             steps {
                 script {
-      withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+      def githubToken = credentials('GitHub Token')
+ //     withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 
                     def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
                     def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
@@ -18,7 +19,7 @@ pipeline {
    sh "echo $PASSWORD"
                     sh "git tag $newVersion"
                 //    sh "git push origin $newVersion -u mark-br-git -p $PASSWORD"
-                //    sh "git push https://$USERNAME:$PASSWORD@github.com/mark-br-git/spring-petclinic-test.git 1.2.0"
+                    sh "git push https://${githubToken}@github.com/mark-br-git/spring-petclinic-test.git 1.2.0"
                     }
                 }
             }
