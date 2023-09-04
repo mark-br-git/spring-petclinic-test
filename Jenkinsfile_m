@@ -11,10 +11,16 @@ pipeline {
             steps {
                 script {
 
-def repoUrlWithAuth = "https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git"
-def sourceBranch = "main"
+withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+    sh("git tag 1.2.0")
+    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git 1.2.0')
+}
 
-git push --repo=${repoUrlWithAuth} --set-upstream ${repoUrlWithAuth} ${sourceBranch}
+
+//def repoUrlWithAuth = "https://mark-br-git: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@github.com/mark-br-git/spring-petclinic-test.git"
+//def sourceBranch = "main"
+
+//git push --repo=${repoUrlWithAuth} --set-upstream ${repoUrlWithAuth} ${sourceBranch}
 
  //     def githubToken = credentials('GitHub Token')
  //     withCredentials([usernamePassword(credentialsId: 'git', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) 
