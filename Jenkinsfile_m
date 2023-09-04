@@ -5,9 +5,9 @@ pipeline {
     }
 
     stages {
-       stage('Checkout') {
-       git branch: 'main', credentialsId: 'git', url: 'git@github.com:mark-67-br/spring-petclinic-test.git'
-       }
+//       stage('Checkout') {
+//       git branch: 'main', credentialsId: 'git', url: 'git@github.com:mark-67-br/spring-petclinic-test.git'
+ //      }
 
         stage('Bump Version and Create Tag') {
 
