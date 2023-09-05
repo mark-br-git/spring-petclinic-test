@@ -63,8 +63,8 @@ stage('Manual Deployment') {
 
           if (userInput == 'yes') {           
             // SSH configuration for your VM
-            def vmUser = 'your_vm_username'
-            def vmHost = 'your_vm_host'
+            def vmUser = 'mbryg'
+            def vmHost = 'petclinic-vm'
             def sshKeyPath = '/path/to/your/ssh/key'
 
             // Application details
@@ -72,9 +72,9 @@ stage('Manual Deployment') {
             def appVersion = '1.0.0'  // Replace with the desired version
 
             // MySQL database connection details
-            def dbHost = 'mysql-host'
+            def dbHost = 'petclinic-db'
             def dbPort = '3306'
-            def dbName = 'mydb'
+            def dbName = 'mysql'
             def dbUser = 'db-username'
             def dbPassword = 'db-password'
 
