@@ -7,8 +7,8 @@ pipeline {
                 script {
                 withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                 def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
-            //    def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
-                 def newVersion = "1.29.0"
+                def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
+            //     def newVersion = "1.29.0"
               
             //    sh("git tag -a some_tag11 -m 'Jenkins'")
                 sh "git tag $newVersion"
