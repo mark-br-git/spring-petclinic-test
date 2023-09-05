@@ -64,7 +64,7 @@ stage('Manual Deployment') {
           if (userInput == 'yes') {           
             // SSH configuration for your VM
             def vmUser = 'mbryg'
-            def vmHost = 'petclinic-vm'
+            def vmHost = '34.116.141.28'
             def sshKeyPath = '/home/mbryg/.ssh/id_rsa'
 
             // Application details
