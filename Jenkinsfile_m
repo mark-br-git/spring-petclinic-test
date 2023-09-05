@@ -12,7 +12,7 @@ pipeline {
               
             //    sh("git tag -a some_tag11 -m 'Jenkins'")
                 sh "git tag $newVersion"
-                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git $newVersion')
+                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git $newVersion HEAD:main')
                 }
                 }
              }
