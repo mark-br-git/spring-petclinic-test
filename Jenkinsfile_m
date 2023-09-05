@@ -30,5 +30,25 @@ pipeline {
    //         }
    //     }
 
+            stage('Build Docker Image') {
+               steps {
+                  script {
+                    // Define Docker Hub repository and image name
+                    def dockerRepo = 'mark67br/main'
+                    def imageName = "${dockerRepo}:$newVersion"
+
+                    // Build the Docker image with the git tag
+                    sh "docker build -t ${imageName} -f Dockerfile_main ."
+
+                    // Log in to Docker Hub
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                    }
+
+                    // Push the Docker image to Docker Hub repository
+                    sh "docker push ${imageName}"
+                }
+            }
+
          }
 }
