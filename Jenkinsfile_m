@@ -113,12 +113,13 @@ stage('Manual Deployment') {
             // Print the link to the application
             echo "Application is running at http://${vmHost}:<app_port>"
         }
-            } else {
+             else {
                  error('The operation has been cancelled.')
                 }
     }
 }
 
 
+}
 }
 }
