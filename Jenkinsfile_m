@@ -8,11 +8,11 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                 def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
             //    def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
-                 def newVersion = "1.27.0"
+                 def newVersion = "1.28.0"
               
             //    sh("git tag -a some_tag11 -m 'Jenkins'")
                 sh "git tag $newVersion"
-                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git $newVersion HEAD:main')
+                sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git $newVersion')
                 }
                 }
              }
@@ -34,8 +34,9 @@ pipeline {
                steps {
                   script {
                     // Define Docker Hub repository and image name
+                    def currentTagNew = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()                    
                     def dockerRepo = 'mark67br/main'
-                    def imageName = "${dockerRepo}:$newVersion"
+                    def imageName = "${dockerRepo}:$currentTagNew"
 
                     // Build the Docker image with the git tag
                     sh "docker build -t ${imageName} -f Dockerfile_main ."
