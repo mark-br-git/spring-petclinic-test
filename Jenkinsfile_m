@@ -83,17 +83,17 @@ stage('Manual Deployment') {
                 sh "ssh ${vmUser}@${vmHost} 'echo Connected to VM'"
                 
                 // Check if a previous version of the application exists and remove it
-                sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${appVersion} && docker rm -f ${appName}:${appVersion} || echo No previous version found'"
+  //              sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${appVersion} && docker rm -f ${appName}:${appVersion} || echo No previous version found'"
                 
                 // Pull the new Docker image from the artifact storage
-                sh "ssh ${vmUser}@${vmHost} 'docker pull my-app:${appVersion}'"
+  //              sh "ssh ${vmUser}@${vmHost} 'docker pull my-app:${appVersion}'"
 
                 // Run the application, ensuring it's connected to the MySQL database
-                sh "ssh ${vmUser}@${vmHost} 'docker run -d --name ${appName}:${appVersion} --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} my-app:${appVersion}'"
+    //            sh "ssh ${vmUser}@${vmHost} 'docker run -d --name ${appName}:${appVersion} --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} my-app:${appVersion}'"
             }
 
             // Print the link to the application
-            echo "Application is running at http://${vmHost}:<app_port>"
+    //        echo "Application is running at http://${vmHost}:<app_port>"
         }
              else {
                  error('The operation has been cancelled.')
