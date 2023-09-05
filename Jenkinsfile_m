@@ -53,24 +53,6 @@ pipeline {
 
          }
 
-        stage('Terraform Destroy Confirmation') {
-            steps {
-                script {
-                    // Skrypt Bash z interakcją użytkownika
-                    def userInput = input(
-                        message: 'Are you sure you want to run terraform destroy?',
-                        parameters: [choice(choices: ['yes', 'no'], description: 'Choose "yes" or "no"', name: 'Confirmation')]
-                    )
-
-                    if (userInput == 'yes') {
-                        sh 'terraform destroy -auto-approve'
-                    } else {
-                        error('The terraform destroy operation has been cancelled.')
-                    }
-                }
-            }
-        }
-
 stage('Manual Deployment') {
     steps {
         script {
