@@ -66,6 +66,7 @@ stage('Manual Deployment') {
             def vmUser = 'jenkins'
             def vmHost = '34.116.141.28'
             def sshKeyPath = '/var/lib/jenkins/.ssh/id_rsa'
+            def currentTag1 = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
 
             // Application details
             def appName = 'spring-petclinic'
@@ -86,7 +87,7 @@ stage('Manual Deployment') {
                 sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${appVersion} && docker rm -f ${appName}:${appVersion} || echo No previous version found'"
                 
                 // Pull the new Docker image from the artifact storage
-  //              sh "ssh ${vmUser}@${vmHost} 'docker pull my-app:${appVersion}'"
+                sh "ssh ${vmUser}@${vmHost} 'docker pull mark67br/main:${currentTag1}'"
 
                 // Run the application, ensuring it's connected to the MySQL database
     //            sh "ssh ${vmUser}@${vmHost} 'docker run -d --name ${appName}:${appVersion} --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} my-app:${appVersion}'"
