@@ -90,7 +90,7 @@ stage('Manual Deployment') {
                 sh "ssh ${vmUser}@${vmHost} 'docker pull mark67br/main:${currentTag1}'"
 
                 // Run the application, ensuring it's connected to the MySQL database
-                sh "ssh ${vmUser}@${vmHost} 'docker run -d --name ${appName}:${currentTag1} --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} mark67br/main:${appVersion}'"
+                sh "ssh ${vmUser}@${vmHost} 'docker run -d --name ${appName}:${currentTag1} --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} mark67br/main:${currentTag1}'"
             }
 
             // Print the link to the application
