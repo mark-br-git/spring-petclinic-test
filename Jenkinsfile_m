@@ -63,9 +63,9 @@ stage('Manual Deployment') {
 
           if (userInput == 'yes') {           
             // SSH configuration for your VM
-            def vmUser = 'mbryg'
+            def vmUser = 'jenkins'
             def vmHost = '34.116.141.28'
-            def sshKeyPath = '/home/mbryg/.ssh/id_rsa'
+            def sshKeyPath = '/var/lib/jenkins/.ssh/id_rsa'
 
             // Application details
             def appName = 'my-app'
