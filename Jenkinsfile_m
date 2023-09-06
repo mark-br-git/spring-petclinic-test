@@ -68,7 +68,7 @@ stage('Manual Deployment') {
             def sshKeyPath = '/var/lib/jenkins/.ssh/id_rsa'
 
             // Application details
-            def appName = 'my-app'
+            def appName = 'spring-petclinic'
             def appVersion = '1.0.0'  // Replace with the desired version
 
             // MySQL database connection details
@@ -83,7 +83,7 @@ stage('Manual Deployment') {
                 sh "ssh  ${vmUser}@${vmHost} 'echo Connected to VM'"
                 
                 // Check if a previous version of the application exists and remove it
-  //              sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${appVersion} && docker rm -f ${appName}:${appVersion} || echo No previous version found'"
+                sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${appVersion} && docker rm -f ${appName}:${appVersion} || echo No previous version found'"
                 
                 // Pull the new Docker image from the artifact storage
   //              sh "ssh ${vmUser}@${vmHost} 'docker pull my-app:${appVersion}'"
