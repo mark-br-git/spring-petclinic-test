@@ -75,9 +75,9 @@ stage('Manual Deployment') {
             // MySQL database connection details
             def dbHost = 'petclinic-db'
             def dbPort = '3306'
-            def dbName = 'mysql'
-            def dbUser = 'db-username'
-            def dbPassword = 'db-password'
+            def dbName = 'mysql-db'
+            def dbUser = 'mysql-user'
+            def dbPassword = 'test'
 
             // Connect to the VM using SSH
             sshagent(credentials: ['SSHjenkins']) {
