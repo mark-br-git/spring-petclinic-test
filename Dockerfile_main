@@ -22,7 +22,7 @@ COPY --from=build /app/target/spring-petclinic-3.1.0-SNAPSHOT.jar /app/spring-pe
 # Expose the port that your application listens on (if applicable)
 EXPOSE 8080
 
-ENV SPRING_PROFILES_ACTIVE=docker
+ENV spring.profiles.active=mysql
 
 # Define the command to run your application
 CMD ["java", "-jar", "spring-petclinic.jar"]
