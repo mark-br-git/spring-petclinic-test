@@ -50,7 +50,7 @@ pipeline {
              if (userInput == 'yes') {           
              // SSH configuration for VM
              def vmUser = 'jenkins'
-             def vmHost = '34.118.84.52'
+             def vmHost = '34.118.20.106'
              def sshKeyPath = '/var/lib/jenkins/.ssh/id_rsa'
              def currentTag1 = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
 
