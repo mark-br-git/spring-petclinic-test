@@ -64,7 +64,7 @@ stage('Manual Deployment') {
           if (userInput == 'yes') {           
             // SSH configuration for your VM
             def vmUser = 'jenkins'
-            def vmHost = '34.116.141.28'
+            def vmHost = '34.118.122.29'
             def sshKeyPath = '/var/lib/jenkins/.ssh/id_rsa'
             def currentTag1 = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
 
