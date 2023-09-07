@@ -8,27 +8,13 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'git', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                 def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
                 def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
-            //     def newVersion = "1.29.0"
-              
-            //    sh("git tag -a some_tag11 -m 'Jenkins'")
+        
                 sh "git tag $newVersion"
                 sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mark-br-git/spring-petclinic-test.git $newVersion HEAD:main')
                 }
                 }
              }
            }
-
-  //      stage('Bump Version and Create Tag') {
- //           steps {
-  //              script {
-  //                  def currentTag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags').trim()
-  //                  def newVersion = sh(returnStdout: true, script: "python3 semver_script.py $currentTag")
-
-   //                 sh "git tag $newVersion"
-  //                  sh "git push origin $newVersion"
-  //              }
-   //         }
-   //     }
 
             stage('Build Docker Image') {
                steps {
@@ -84,17 +70,17 @@ stage('Manual Deployment') {
                 sh "ssh  ${vmUser}@${vmHost} 'echo Connected to VM'"
                 
                 // Check if a previous version of the application exists and remove it
-                sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${appVersion} && docker rm -f ${appName}:${appVersion} || echo No previous version found'"
+                sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${currentTag1} && docker rm -f ${appName}:${currentTag1} || echo No previous version found'"
                 
                 // Pull the new Docker image from the artifact storage
                 sh "ssh ${vmUser}@${vmHost} 'docker pull mark67br/main:${currentTag1}'"
 
                 // Run the application, ensuring it's connected to the MySQL database
-                sh "ssh ${vmUser}@${vmHost} 'docker run -d -p 8080:8080 --name spring-petclinic --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} mark67br/main:${currentTag1}'"
+                sh "ssh ${vmUser}@${vmHost} 'docker run -d --name spring-petclinic --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} mark67br/main:${currentTag1}'"
             }
 
             // Print the link to the application
-    //        echo "Application is running at http://${vmHost}:<app_port>"
+            echo "Application is running at http://${vmHost}:8080"
         }
              else {
                  error('The operation has been cancelled.')
