@@ -72,10 +72,11 @@ pipeline {
                 sh "ssh ${vmUser}@${vmHost} 'docker ps -a | grep ${appName}:${currentTag1} && docker rm -f ${appName}:${currentTag1} || echo No previous version found'"
                 
                 // Pull the new Docker image from the artifact storage
-                sh "ssh ${vmUser}@${vmHost} 'docker pull mark67br/main:${currentTag1}'"
+                sh "ssh ${vmUser}@${vmHost} 'docker pull {appName}:${currentTag1}'"
 
                 // Run the application, ensuring it's connected to the MySQL database
-                sh "ssh ${vmUser}@${vmHost} 'docker run -d --name spring-petclinic --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} mark67br/main:${currentTag1}'"
+                // sh "ssh ${vmUser}@${vmHost} 'docker run -d --name spring-petclinic --network host -e DB_HOST=${dbHost} -e DB_PORT=${dbPort} -e DB_NAME=${dbName} -e DB_USER=${dbUser} -e DB_PASSWORD=${dbPassword} {appName}:${currentTag1}'"
+                sh "ssh ${vmuser}@${vmHost} 'docker run -e SPRING_PROFILES_ACTIVE=mysql -p 8080:8080 -d {appName}:{currentTag1}'"
                }
 
                // Print the link to the application
