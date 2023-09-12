@@ -58,7 +58,7 @@ pipeline {
              def appName = 'mark67br/main'
 
              // MySQL database connection details
-             def dbHost = '34.116.172.8'
+             def dbHost = '34.118.122.29'
              def dbPort = '3306'
              def dbName = 'petclinic'
              def dbUser = 'petclinic'
